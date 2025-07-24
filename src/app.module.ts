@@ -28,7 +28,7 @@ import { SaleProductModule } from './sale-product/sale-product.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== 'production',
     }),
     UsersModule,
     PetModule,
