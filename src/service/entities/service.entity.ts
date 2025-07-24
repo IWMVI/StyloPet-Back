@@ -12,7 +12,7 @@ export class Service {
   @Column()
   descricao: string;
 
-  @Column()
+  @Column('decimal')
   preco: number;
 
   @Column('decimal')
