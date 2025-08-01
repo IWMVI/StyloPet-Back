@@ -1,34 +1,54 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PetService } from './pet.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
-
-@Controller('pet')
+import { PetService } from './pet.service';
+@Controller('pets')
+// @UseGuards(JwtAuthGuard) // Exemplo: Protege todas as rotas deste controlador
 export class PetController {
   constructor(private readonly petService: PetService) {}
 
   @Post()
-  create(@Body() createPetDto: CreatePetDto) {
-    return this.petService.create(createPetDto);
+  create(@Body() createPetDto: CreatePetDto, @Req() req) {
+    // Em uma aplicação real, o ID viria do usuário autenticado: const userId = req.user.id;
+    const userId = 1; // Placeholder
+    return this.petService.create(createPetDto, userId);
   }
 
   @Get()
-  findAll() {
-    return this.petService.findAll();
+  findAll(@Req() req) {
+    const userId = 1; // Placeholder: req.user.id
+    return this.petService.findAll(userId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.petService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    const userId = 1; // Placeholder: req.user.id
+    return this.petService.findOne(id, userId);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePetDto: UpdatePetDto) {
-    return this.petService.update(+id, updatePetDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePetDto: UpdatePetDto,
+    @Req() req,
+  ) {
+    const userId = 1; // Placeholder: req.user.id
+    return this.petService.update(id, updatePetDto, userId);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.petService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    const userId = 1; // Placeholder: req.user.id
+    return this.petService.remove(id, userId);
   }
 }
