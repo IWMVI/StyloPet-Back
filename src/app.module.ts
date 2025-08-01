@@ -21,7 +21,7 @@ import { SaleProductModule } from './sale-product/sale-product.module';
       validationSchema: null,
     }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mysql',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT || '5432', 10),
       username: process.env.DB_USER,
